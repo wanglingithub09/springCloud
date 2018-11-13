@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://D:/creAbs/hrp-app/hrp-main" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-parent/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="D:/creAbs/hrp-app/hrp-common/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-interface/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-main/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-parent/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-persist/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-process/pom.xml" />
+        <option value="D:/creAbs/hrp-app/hrp-service/pom.xml" />
+        <option value="$PROJECT_DIR$/aaaaaaaaa/pom.xml" />
+        <option value="$PROJECT_DIR$/dddddd/pom.xml" />
+        <option value="$PROJECT_DIR$/frame-base/pom.xml" />
+        <option value="$PROJECT_DIR$/j/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-cloud-demo-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-cloud-eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-cloud-eureka1/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-cloud-provider2/pom.xml" />
+        <option value="$PROJECT_DIR$/springcloudeureka/pom.xml" />
+        <option value="$PROJECT_DIR$/sss/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

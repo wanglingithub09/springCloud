@@ -1,0 +1,31 @@
+#服务名
+spring:
+  application:
+    name: spring-cloud-consumer
+#端口
+server:
+  port: 8088
+
+#注册中心地址及账号密码
+eurekaServer:
+  user: root
+  password: root
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+        thread:
+        #毫秒单位
+        timeoutInMilliseconds: 2000
+eureka:
+  instance:
+    instance-id: 10.54.24.113:${server.port}
+    hostname: 10.54.24.113
+    prefer-ip-address: true
+  client:
+    prefer-ip-address: true
+    #将此项目注册到Eureka服务
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${eurekaServer.user}:${eurekaServer.password}@peer1:8761/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer2:8762/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer3:8763/eureka

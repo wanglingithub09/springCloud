@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: eureka-server
+#开启权限认证
+  security:
+    basic:
+      enabled: true
+    user:
+      name: root
+      password: root
+
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    #此项目不作为客户端注册
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      #开启权限验证后Eureka地址为 用户名：密码@地址：端口号，如未开启权限验证则直接使用 地址：端口号
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@peer1:8671/eureka,http://${spring.security.user.name}:${spring.security.user.password}@peer3:8673/eureka
+  server:
+    #关闭注册中心的自我保护机制，防止已关闭的实例无法从注册中心剔除
+      enable-self-preservation: false
+    #结合自我保护机制，20秒清除已关闭的服务
+      eviction-interval-timer-in-ms: 20000

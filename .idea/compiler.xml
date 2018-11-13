@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eureka-service" />
+        <module name="eureka-service-three" />
+        <module name="eureka-service-two" />
+        <module name="frame-base-demo" />
+        <module name="spring-cloud-consumer" />
+        <module name="spring-cloud-consumer-two" />
+        <module name="spring-cloud-provider" />
+        <module name="spring-cloud-provider-two" />
+        <module name="spring-cloud-provider2" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="aaaaaaa" target="1.8" />
+      <module name="aaaaaaaa" target="1.8" />
+      <module name="aaaaaaaaa" target="1.8" />
+      <module name="dddddd" target="1.8" />
+      <module name="frame-base" target="1.8" />
+      <module name="hrp-app" target="1.8" />
+      <module name="hrp-common" target="1.8" />
+      <module name="hrp-interface" target="1.8" />
+      <module name="hrp-parent" target="1.8" />
+      <module name="hrp-persist" target="1.8" />
+      <module name="hrp-process" target="1.8" />
+      <module name="hrp-service" target="1.8" />
+      <module name="spring-cloud-demo-provider" target="1.8" />
+      <module name="spring-cloud-eureka" target="1.8" />
+      <module name="spring-cloud-provider2" target="1.8" />
+      <module name="springcloudeureka" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
