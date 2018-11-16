@@ -1,14 +1,12 @@
 package com.org.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.org.base.enumclass.RetCode;
 import com.org.base.vo.ServerData;
 import com.org.service.RestTemplateService;
 import com.org.util.HttpConstants;
 import com.org.util.StringUtils2;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

@@ -2,6 +2,8 @@
 spring:
   application:
     name: spring-cloud-consumer-two
+  profiles:
+    active: dev
 #端口
 server:
   port: 8089

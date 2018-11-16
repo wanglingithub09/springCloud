@@ -7,6 +7,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClients;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableCircuitBreaker
@@ -14,6 +15,7 @@ import org.springframework.cloud.netflix.ribbon.RibbonClients;
 @RibbonClients(
         @RibbonClient(name = "spring-cloud-provider",configuration = RibbonClientConfigure.class)
 )
+@EnableAspectJAutoProxy
 public class Consumer2Application {
 
     public static void main(String[] args) {
