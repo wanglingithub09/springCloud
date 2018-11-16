@@ -1,8 +1,14 @@
 package com.org.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.org.base.enumclass.RetCode;
+import com.org.base.vo.ServerData;
 import com.org.service.RestTemplateService;
 import com.org.util.HttpConstants;
+import com.org.util.StringUtils2;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -35,8 +41,6 @@ public class RestTemplateServiceImpl implements RestTemplateService {
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
     public String post(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
-        System.out.println(serviceInfoImpl.getServerName());
-        System.out.println(serviceInfoImpl.getPort());
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
@@ -70,7 +74,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         }catch(Exception e){
             new Exception("request falid",e);
         }
-        return result.getBody();
+        return convertJsonVo(result.getBody(),0);
     }
 
     /**
@@ -79,6 +83,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      * @return
      */
+    @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
     public String get(String url,Map<String,?> ...uriVariables){
         //url必须校验
@@ -98,16 +103,16 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         }catch (Exception e){
             new Exception(e);
         }
-        return result.getBody();
+        return convertJsonVo(result.getBody(),0);
     }
 
     /**
-     *
      * @param url
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      */
+    @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public void delete(String url,Map<String,?> ...uriVariables){
+    public String delete(String url,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
@@ -118,6 +123,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         }else{
             restTemplate.delete(url);
         }
+        return convertJsonVo("true",0);
     }
 
     private Map<String,Object> mapArgsConvertMap(Map<String,?> ...uriVariables){
@@ -133,13 +139,30 @@ public class RestTemplateServiceImpl implements RestTemplateService {
     }
 
     private void valiResponeStatus(ResponseEntity<String> result){
+        if(null == result || StringUtils.isBlank(result.getBody())){
+            new Exception("result VO is not null");
+        }
         if (!HttpConstants.StatusCode.STATUS_CODE_200.equals(result.getStatusCode().toString())) {
             new Exception("request falid，status code:"+result.getStatusCode()+":"+result.getBody());
         }
     }
 
-    private String HystrixError(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
-        return "request falid: "+url+", Service closed";
+    public String HystrixError(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
+        String msgVo = "request url falid: "+url+", Port:"+serviceInfoImpl.getPort()+", Service closed，Please check!";
+        return convertJsonVo(msgVo,1);
     }
 
+    private String convertJsonVo(String body,int isSuccess){
+        ServerData serverData = new ServerData();
+        if(StringUtils2.isJsonValid(body)){
+            serverData = JSONObject.parseObject(body, ServerData.class);
+        }else{
+            serverData.setBo(body);
+        }
+        if(isSuccess == 1){
+            serverData.setMsg(RetCode.BUSINESS_CODE.getMsgId());
+            serverData.setCode(RetCode.BUSINESS_CODE.getMsgCode());
+        }
+        return JSONObject.toJSONString(serverData);
+    }
 }

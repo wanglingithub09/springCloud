@@ -8,16 +8,22 @@ import java.util.Map;
 @Data
 public class ServerData<T> {
 
-    private RetCode code;
+    private String code;
 
-    private RetCode msg;
+    private String msg;
 
     private T bo;
 
     private Map<String,?> other;
 
     public ServerData(){
-        this.msg = RetCode.BUSINESS_MESSGE;
-        this.code = RetCode.BUSINESS_CODE;
+        this.msg = RetCode.SUCCESS_CODE.getMsgId();
+        this.code = RetCode.SUCCESS_CODE.getMsgCode();
+    }
+
+    public ServerData(T bo){
+        this.msg = RetCode.SUCCESS_CODE.getMsgId();
+        this.code = RetCode.SUCCESS_CODE.getMsgCode();
+        this.bo = bo;
     }
 }

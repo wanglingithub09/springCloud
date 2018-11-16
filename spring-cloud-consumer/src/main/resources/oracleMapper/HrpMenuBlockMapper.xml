@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper1.HrpMenuBlockMapper">
+
+    <resultMap id="BaseResultMap" type="com.org.entity.HrpMenuBlock">
+        <id column="CRC_HRP_BLOCK_CODE" property="crcHrpBlockCode" />
+        <result column="CRC_HRP_BLOCK_TYPE" property="crcHrpBlockType" />
+        <result column="CRC_HRP_BLOCK_NAME" property="crcHrpBlockName" />
+        <result column="CRC_HRP_MENU_CODE" property="crcHrpMenuCode" />
+        <result column="CRC_PAR_BLOCK_CODE" property="crcParBlockCode" />
+        <result column="DESCR254" property="descr254" />
+        <result column="ENABLED" property="enabled" />
+        <result column="FILE_NAME1" property="fileName1" />
+        <result column="ATTACHSYSFILENAME" property="attachsysfilename" />
+        <result column="CRC_AUTHORITY_FLAG" property="crcAuthorityFlag" />
+        <result column="CRC_IMAGE_PATH" property="crcImagePath" />
+        <result column="HRS_ROW_ADD_DTTM" property="hrsRowAddDttm" />
+        <result column="HRS_ROW_ADD_OPRID" property="hrsRowAddOprid" />
+        <result column="HRS_ROW_UPD_DTTM" property="hrsRowUpdDttm" />
+        <result column="HRS_ROW_UPD_OPRID" property="hrsRowUpdOprid" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    t.CRC_HRP_BLOCK_CODE, t.CRC_HRP_BLOCK_TYPE, t.CRC_HRP_BLOCK_NAME, t.CRC_HRP_MENU_CODE, t.CRC_PAR_BLOCK_CODE,
+    t.DESCR254, t.ENABLED, t.FILE_NAME1, t.ATTACHSYSFILENAME, t.CRC_AUTHORITY_FLAG,t.CRC_IMAGE_PATH,
+    t.HRS_ROW_ADD_DTTM, t.HRS_ROW_ADD_OPRID, t.HRS_ROW_UPD_DTTM, t.HRS_ROW_UPD_OPRID
+    </sql>
+
+    <select id="getHrpMenuBlockByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from PS_MANGO_CRC_HRP_BLOCK t
+        where t.CRC_HRP_MENU_CODE = #{crcHrpBlockCode,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

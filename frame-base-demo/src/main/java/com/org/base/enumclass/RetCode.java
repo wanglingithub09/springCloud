@@ -1,38 +1,33 @@
 package com.org.base.enumclass;
 
-public enum RetCode {
+public enum  RetCode {
 
-    SUCCESS_CODE("SUCCESS_MESSAGE_CODE","0000"),
-    SUCCESS_MESSAGE("SUCCESS_MESSAGE","Success"),
+    SUCCESS_CODE("Success","0000"),
+    BUSINESS_CODE("Business error","0001"),
+    VALIDATIONEXCEPTION_CODE("ValidationException Error","0002");
 
-    BUSINESS_CODE("BUSINESS_MESSGE_CODE","0001"),
-    BUSINESS_MESSGE("BUSINESS_MESSGE","Business error"),
+    private String msgId;
 
-    VALIDATIONEXCEPTION_CODE("VALIDATIONEXCEPTION_CODE","0002"),
-    VALIDATIONEXCEPTION_MESSAGE("VALIDATIONEXCEPTION_MESSAGE","ValidationException Error");
+    private String msgCode;
 
-    private String messageId;
-
-    private String messageCode;
-
-    RetCode(String messageId,String messageCode){
-        this.messageId=messageId;
-        this.messageCode=messageCode;
+    RetCode(String msgId,String msgCode){
+        this.msgId=msgId;
+        this.msgCode=msgCode;
     }
 
-    public String getMessageId() {
-        return messageId;
+    public String getMsgId() {
+        return msgId;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 
-    public String getMessageCode() {
-        return messageCode;
+    public String getMsgCode() {
+        return msgCode;
     }
 
-    public void setMessageCode(String messageCode) {
-        this.messageCode = messageCode;
+    public void setMsgCode(String msgCode) {
+        this.msgCode = msgCode;
     }
 }
