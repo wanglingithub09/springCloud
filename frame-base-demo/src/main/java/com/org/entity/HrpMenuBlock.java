@@ -1,6 +1,7 @@
 package com.org.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.org.base.vo.PageQuery;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

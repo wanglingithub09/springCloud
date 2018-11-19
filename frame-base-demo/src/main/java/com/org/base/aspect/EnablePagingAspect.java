@@ -29,6 +29,7 @@ public class EnablePagingAspect {
             if(args[i] instanceof PageQuery){
                 PageQuery pageQuery = (PageQuery)args[i];
                 if (pageQuery.isPaging()) {
+                    System.out.println("page:"+pageQuery.getPage()+"   size:"+pageQuery.getSize());
                     PageHelper.startPage(pageQuery.getPage(), pageQuery.getSize());
                     return;
                 }

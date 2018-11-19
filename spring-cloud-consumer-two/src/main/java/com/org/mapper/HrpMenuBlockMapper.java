@@ -15,4 +15,8 @@ import java.util.List;
 public interface HrpMenuBlockMapper {
     @DS(DatabaseType.oracleDb)
     public List<HrpMenuBlock> getHrpMenuBlockByCode(@Param("crcHrpBlockCode") String crcHrpBlockCode);
+
+    @DS(DatabaseType.oracleDb)
+    List<HrpMenuBlock> getUserDevice(HrpMenuBlock hrpMenuBlock);
+
 }

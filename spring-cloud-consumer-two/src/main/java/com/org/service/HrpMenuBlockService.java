@@ -1,5 +1,6 @@
 package com.org.service;
 
+import com.org.base.vo.FromData;
 import com.org.entity.HrpMenuBlock;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,4 +13,6 @@ import java.util.List;
 */
 public interface HrpMenuBlockService {
     public List<HrpMenuBlock> getHrpMenuBlockByCode(@Param("crcHrpBlockCode") String crcHrpBlockCode);
+
+    List<HrpMenuBlock> getUserDevice(FromData<HrpMenuBlock> from);
 }

@@ -32,4 +32,9 @@
         where t.CRC_HRP_MENU_CODE = #{crcHrpBlockCode,jdbcType=VARCHAR}
     </select>
 
+    <select id="getUserDevice" resultMap="BaseResultMap" parameterType="com.org.entity.HrpMenuBlock">
+        select <include refid="Base_Column_List"/>
+        from PS_MANGO_CRC_HRP_BLOCK t
+        where t.CRC_HRP_MENU_CODE = #{crcHrpBlockCode,jdbcType=VARCHAR}
+    </select>
 </mapper>

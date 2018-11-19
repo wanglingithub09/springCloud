@@ -1,13 +1,14 @@
 package com.org.service.impl;
 
-import com.org.configure.DS;
-import com.org.configure.DatabaseType;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.org.base.Annotation.EnablePaging;
+import com.org.base.vo.FromData;
 import com.org.entity.HrpMenuBlock;
 import com.org.mapper.HrpMenuBlockMapper;
 import com.org.service.HrpMenuBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +26,11 @@ public class HrpMenuBlockServiceImpl implements HrpMenuBlockService {
     @Override
     public List<HrpMenuBlock> getHrpMenuBlockByCode(String crcHrpBlockCode) {
         return hrpMenuBlockMapper.getHrpMenuBlockByCode(crcHrpBlockCode);
+    }
+
+    @EnablePaging
+    @Override
+    public List<HrpMenuBlock> getUserDevice(FromData<HrpMenuBlock> from) {
+        return hrpMenuBlockMapper.getUserDevice(from.getBo());
     }
 }

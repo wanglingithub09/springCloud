@@ -2,7 +2,7 @@ package com.org.configure;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.pagehelper.PageHelper;
-
+import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -91,21 +91,10 @@ public class DataSourceConfig {
             @Qualifier("oracleDataSource") DataSource oracleDataSource) {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(this.dataSource(mysqlDataSource, oracleDataSource));
-        //分页插件
-        /*PageHelper pageHelper = new PageHelper();
-        Properties properties = new Properties();
-        properties.setProperty("reasonable", "true");
-        properties.setProperty("supportMethodsArguments", "true");
-        properties.setProperty("returnPageInfo", "check");
-        properties.setProperty("params", "count=countSql");
-        properties.setProperty("autoRuntimeDialect", "true");
-        pageHelper.setProperties(properties);
-        //添加插件
-        bean.setPlugins(new Interceptor[]{ pageHelper });*/
-
         //添加XML目录
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
-            bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**"));
+            bean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
             return bean.getObject();
         } catch (Exception e) {
             e.printStackTrace();

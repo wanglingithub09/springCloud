@@ -1,13 +1,13 @@
 package com.org.controller;
 
+import com.org.base.vo.FromData;
+import com.org.base.vo.PageVo;
 import com.org.base.vo.ServerData;
 import com.org.entity.HrpMenuBlock;
 import com.org.service.HrpMenuBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +29,15 @@ public class HrpMenuBlockController {
         return new ServerData<>(hrpMenuBlockList);
     }
 
+    @PostMapping(value = "/getUserDevice",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServerData<PageVo> getUserDevice(@RequestBody FromData<HrpMenuBlock> from){
+
+        List<HrpMenuBlock> hrpMenuBlockList = hrpMenuBlockService.getUserDevice(from);
+        PageVo vo = new PageVo(hrpMenuBlockList);
+        vo.setCount(hrpMenuBlockList.size());
+        vo.setPage(from.getPage());
+        vo.setPageSize(from.getSize());
+        return new ServerData<>(vo);
+    }
 
 }
