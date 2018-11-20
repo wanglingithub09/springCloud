@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author: WangLin
- * @Description:
+ * @Description: 动态获取服务端口
  * @Date: 2018/11/13 10:14
  */
 @Component

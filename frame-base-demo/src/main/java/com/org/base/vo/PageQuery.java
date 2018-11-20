@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
 * @Author: WangLin
-* @Description: 分页抽象类
+* @Description: 分页查询抽象类
 * @Date: 2018/11/16 15:54
 */
 @Data

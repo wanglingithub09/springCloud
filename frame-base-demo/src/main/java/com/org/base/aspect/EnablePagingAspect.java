@@ -9,12 +9,16 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
+/**
+* @Author: WangLin
+* @Description: aspect切面到注解EnablePaging，启用PageHelper分页
+* @Date: 2018/11/20 10:20
+*/
 @Aspect
 @Component
 public class EnablePagingAspect {
 
-    @Pointcut("@annotation(com.org.base.Annotation.EnablePaging)")
+    @Pointcut("@annotation(com.org.base.annotation.EnablePaging)")
     public void pointcut(){
 
     }
@@ -29,7 +33,6 @@ public class EnablePagingAspect {
             if(args[i] instanceof PageQuery){
                 PageQuery pageQuery = (PageQuery)args[i];
                 if (pageQuery.isPaging()) {
-                    System.out.println("page:"+pageQuery.getPage()+"   size:"+pageQuery.getSize());
                     PageHelper.startPage(pageQuery.getPage(), pageQuery.getSize());
                     return;
                 }

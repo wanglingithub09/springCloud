@@ -1,11 +1,14 @@
-package com.org.configure;
-
+package com.org.configure.datasource;
+/**
+* @Author: WangLin
+* @Description: 通过线程来设置当前数据源
+* @Date: 2018/11/20 10:15
+*/
 public class DataSourceContextHolder {
     /**
      * 默认数据源
      */
     public static final DatabaseType DEFAULT_DS = DatabaseType.mysqlDb;
-    //public static final DatabaseType DEFAULT_DS = DatabaseType.oracleDb;
 
     private static final ThreadLocal<DatabaseType> contextHolder = new ThreadLocal<>();
 

@@ -1,7 +1,9 @@
-package com.org.configure;
+package com.org.configure.datasource;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ import java.lang.reflect.Method;
 
 /**
 * @Author: WangLin
-* @Description: aop来实现根据注解来动态切换数据源的动作
+* @Description: aop来实现根据注解来动态切换数据源的动作,@Order是spring容器启动时加载该配置的顺序
 * @Date: 2018/11/16 17:01
 */
 @Aspect
@@ -22,7 +24,10 @@ public class DynamicDataSourceAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
 
-    @Pointcut(value = "execution(* com.org.mapper.*.*(..))")
+    /**
+     * 切面com包下到mapper包下所有切入点
+     */
+    @Pointcut(value = "execution(* com..mapper..*.*(..))")
     private void pointcut() {
     }
 

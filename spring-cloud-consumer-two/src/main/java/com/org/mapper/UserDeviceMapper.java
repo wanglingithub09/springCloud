@@ -1,7 +1,7 @@
 package com.org.mapper;
 
-import com.org.configure.DS;
-import com.org.configure.DatabaseType;
+import com.org.configure.datasource.DS;
+import com.org.configure.datasource.DatabaseType;
 import com.org.entity.UserDevice;
 import org.apache.ibatis.annotations.Param;
 

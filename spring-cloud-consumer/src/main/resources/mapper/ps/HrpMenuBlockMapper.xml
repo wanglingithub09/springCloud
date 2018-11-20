@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.org.mapper1.HrpMenuBlockMapper">
+<mapper namespace="com.org.mapper.HrpMenuBlockMapper">
 
     <resultMap id="BaseResultMap" type="com.org.entity.HrpMenuBlock">
         <id column="CRC_HRP_BLOCK_CODE" property="crcHrpBlockCode" />

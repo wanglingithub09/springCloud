@@ -1,4 +1,4 @@
-package com.org.base.Annotation;
+package com.org.base.annotation;
 
 import java.lang.annotation.*;
 /**

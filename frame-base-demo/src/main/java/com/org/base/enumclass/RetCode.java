@@ -1,5 +1,9 @@
 package com.org.base.enumclass;
-
+/**
+* @Author: WangLin
+* @Description: 返回 消息/码
+* @Date: 2018/11/20 10:22
+*/
 public enum  RetCode {
 
     SUCCESS_CODE("Success","0000"),

@@ -1,4 +1,4 @@
-package com.org.configure;
+package com.org.configure.routing;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;

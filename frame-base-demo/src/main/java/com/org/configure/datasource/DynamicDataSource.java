@@ -1,6 +1,7 @@
-package com.org.configure;
+package com.org.configure.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
 /**
 * @Author: WangLin
 * @Description: 继承抽象类AbstractRoutingDataSource实现抽象方法——选择切换到哪个数据源的方法

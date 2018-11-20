@@ -5,7 +5,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.org.base.enumclass.RetCode;
 import com.org.base.vo.ServerData;
 import com.org.service.RestTemplateService;
-import com.org.util.HttpConstants;
+import com.org.constants.HttpConstants;
 import com.org.util.StringUtils2;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+* @Author: WangLin
+* @Description: 使用RestTemplate来各服务之间调用，post，get，delete
+* @Date: 2018/11/20 10:24
+*/
 @Component("restTemplateServiceImpl")
 public class RestTemplateServiceImpl implements RestTemplateService {
 
@@ -124,6 +128,33 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         return convertJsonVo("true",0);
     }
 
+    /**
+     * 服务断路器
+     * @param url
+     * @param params
+     * @param headerParams
+     * @param uriVariables
+     * @return
+     */
+    public String HystrixError(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
+        String msgVo = "request url falid: "+url+", Port:"+serviceInfoImpl.getPort()+", Service closed，Please check!";
+        return convertJsonVo(msgVo,1);
+    }
+
+    private String convertJsonVo(String body,int isSuccess){
+        ServerData serverData = new ServerData();
+        if(StringUtils2.isJsonValid(body)){
+            serverData = JSONObject.parseObject(body, ServerData.class);
+        }else{
+            serverData.setBo(body);
+        }
+        if(isSuccess == 1){
+            serverData.setMsg(RetCode.BUSINESS_CODE.getMsgId());
+            serverData.setCode(RetCode.BUSINESS_CODE.getMsgCode());
+        }
+        return JSONObject.toJSONString(serverData);
+    }
+
     private Map<String,Object> mapArgsConvertMap(Map<String,?> ...uriVariables){
         Map<String,Object> map = new HashMap<>();
         if(null != uriVariables){
@@ -143,24 +174,5 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         if (!HttpConstants.StatusCode.STATUS_CODE_200.equals(result.getStatusCode().toString())) {
             new Exception("request falid，status code:"+result.getStatusCode()+":"+result.getBody());
         }
-    }
-
-    public String HystrixError(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
-        String msgVo = "request url falid: "+url+", Port:"+serviceInfoImpl.getPort()+", Service closed，Please check!";
-        return convertJsonVo(msgVo,1);
-    }
-
-    private String convertJsonVo(String body,int isSuccess){
-        ServerData serverData = new ServerData();
-        if(StringUtils2.isJsonValid(body)){
-            serverData = JSONObject.parseObject(body, ServerData.class);
-        }else{
-            serverData.setBo(body);
-        }
-        if(isSuccess == 1){
-            serverData.setMsg(RetCode.BUSINESS_CODE.getMsgId());
-            serverData.setCode(RetCode.BUSINESS_CODE.getMsgCode());
-        }
-        return JSONObject.toJSONString(serverData);
     }
 }

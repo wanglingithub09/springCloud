@@ -6,7 +6,7 @@ import com.org.base.enumclass.RetCode;
 import com.org.base.vo.ServerData;
 import com.org.entity.User;
 import com.org.service.RestTemplateService;
-import com.org.util.HttpConstants;
+import com.org.constants.HttpConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

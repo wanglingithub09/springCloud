@@ -3,7 +3,7 @@ package com.org.service;
 import java.util.Map;
 /**
 * @Author: WangLin
-* @Description: 
+* @Description: 服务之间通讯接口
 * @Date: 2018/11/13 14:47
 */
 public interface RestTemplateService {

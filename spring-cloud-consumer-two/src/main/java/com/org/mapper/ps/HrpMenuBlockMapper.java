@@ -1,7 +1,7 @@
-package com.org.mapper;
+package com.org.mapper.ps;
 
-import com.org.configure.DS;
-import com.org.configure.DatabaseType;
+import com.org.configure.datasource.DS;
+import com.org.configure.datasource.DatabaseType;
 import com.org.entity.HrpMenuBlock;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +14,7 @@ import java.util.List;
 */
 public interface HrpMenuBlockMapper {
     @DS(DatabaseType.oracleDb)
-    public List<HrpMenuBlock> getHrpMenuBlockByCode(@Param("crcHrpBlockCode") String crcHrpBlockCode);
+    List<HrpMenuBlock> getHrpMenuBlockByCode(@Param("crcHrpBlockCode") String crcHrpBlockCode);
 
     @DS(DatabaseType.oracleDb)
     List<HrpMenuBlock> getUserDevice(HrpMenuBlock hrpMenuBlock);

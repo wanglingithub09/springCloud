@@ -1,9 +1,6 @@
-package com.org.configure;
+package com.org.configure.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInterceptor;
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,7 +20,6 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
 * @Author: WangLin
@@ -81,9 +77,10 @@ public class DataSourceConfig {
     }
 
     /**
-     *将动态数据源交给mybatis的SqlSessionFactoryBean，并添加PageHelper分页插件。
-     *因为要切换数据源，必须要把PageHelper的autoRuntimeDialect属性设置为true才能在不同类新的数据源切换时，
-     *使用不同数据源的分页方式。
+     * 开启SqlSessionFactory配置,注入数据源
+     * @param mysqlDataSource
+     * @param oracleDataSource
+     * @return
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(
@@ -94,7 +91,8 @@ public class DataSourceConfig {
         //添加XML目录
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
-            bean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+            //匹配资源文件mapper包及所有子包目录下,以Mapper.xml结尾的mybatis文件。(注意Mapper大小写)
+            bean.setMapperLocations(resolver.getResources("classpath*:mapper/**/*Mapper.xml"));
             return bean.getObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,6 +100,11 @@ public class DataSourceConfig {
         }
     }
 
+    /**
+     * 使用SqlSessionTemplate 对数据库的操作
+     * @param sqlSessionFactory
+     * @return
+     */
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
@@ -115,7 +118,9 @@ public class DataSourceConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    //设置公共配置
+    /**
+     * 公共资源配置
+     */
     private void setCommonConfiguration(DruidDataSource datasource){
         datasource.setInitialSize(Integer.valueOf(env.getProperty("datasource.initialSize")));
         datasource.setMinIdle(Integer.valueOf(env.getProperty("datasource.minIdle")));
@@ -134,7 +139,7 @@ public class DataSourceConfig {
         try {
             datasource.setFilters(env.getProperty("datasource.filters"));
         } catch (SQLException e) {
-            log.error("",e);
+            log.error("connection exception",e);
             e.printStackTrace();
         }
         datasource.setConnectionProperties(env.getProperty("datasource.connectionProperties"));

@@ -1,5 +1,9 @@
-package com.org.util;
-
+package com.org.constants;
+/**
+* @Author: WangLin
+* @Description: http常量
+* @Date: 2018/11/20 10:31
+*/
 public class HttpConstants {
 
     public static class Headers{

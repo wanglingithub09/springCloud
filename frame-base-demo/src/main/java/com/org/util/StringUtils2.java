@@ -3,7 +3,11 @@ package com.org.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-
+/**
+* @Author: WangLin
+* @Description: 字符工具类
+* @Date: 2018/11/20 10:31
+*/
 public class StringUtils2 {
 
     /**
