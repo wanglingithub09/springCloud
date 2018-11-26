@@ -1,6 +1,7 @@
 package com.org.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.org.base.BaseInfo;
 import com.org.base.vo.ServerData;
 import com.org.entity.User;
 import org.springframework.http.MediaType;
@@ -9,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseInfo {
 
     @GetMapping("/getUserById/{id}")
-    public ServerData<User> getUser(@PathVariable("id") Integer id){
+    public ServerData<User> getUser(HttpServletRequest request,@PathVariable("id") Integer id){
+        System.out.println(request.getHeader("X_USER_ID"));
+        System.out.println(getCurrentUserInfo());
         return new ServerData<>(new User(id,"张三",18,null));
     }
 
@@ -27,6 +29,7 @@ public class UserController {
 
     @PostMapping(value = "/getUser",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServerData<User> getUser(@RequestBody User user,String age, HttpServletRequest request){
+        System.out.println(getCurrentUserInfo());
         System.out.println(JSON.toJSON(user));
         user.setAge(Integer.valueOf(age));
         user.setPhone(request.getHeader("phone"));

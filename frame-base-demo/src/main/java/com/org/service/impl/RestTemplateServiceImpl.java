@@ -4,17 +4,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.org.base.enumclass.RetCode;
 import com.org.base.vo.ServerData;
-import com.org.service.RestTemplateService;
 import com.org.constants.HttpConstants;
+import com.org.service.RestTemplateService;
 import com.org.util.StringUtils2;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -42,7 +44,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String post(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
+    public String post(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
@@ -51,18 +53,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         if(StringUtils.isBlank(params)){
             params = "";
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpConstants.Headers.ACCEPT,HttpConstants.Headers.APPLICATION_JSON);
-        headers.add(HttpConstants.Headers.CONTENT_TYPE, HttpConstants.Headers.APPLICATION_JSON_UTF_8);
-        headers.add(HttpConstants.Headers.X_TOKEN_VALUE, HttpConstants.Headers.X_TOKEN_VALUE);
-        if(null != headerParams) {
-            for (Map.Entry<String,String> entry: headerParams.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    headers.set(key,value);
-            }
-        }
-        HttpEntity httpEntity = new HttpEntity(params, headers);
+        HttpEntity httpEntity = getHttpEntity(params, headerParams,request);
         ResponseEntity<String> result = null;
         try {
             Map<String,Object> map = mapArgsConvertMap(uriVariables);
@@ -79,6 +70,23 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         return convertJsonVo(result.getBody(),0);
     }
 
+    private HttpEntity getHttpEntity(String params, Map<String, String> headerParams,HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpConstants.Headers.X_USER_ID,request.getHeader(HttpConstants.Headers.X_USER_ID));
+        headers.add(HttpConstants.Headers.SKIP_VALIDATION,HttpConstants.Headers.SKIP_VALIDATION);
+        headers.add(HttpConstants.Headers.ACCEPT,HttpConstants.Headers.APPLICATION_JSON);
+        headers.add(HttpConstants.Headers.CONTENT_TYPE, HttpConstants.Headers.APPLICATION_JSON_UTF_8);
+        headers.add(HttpConstants.Headers.X_TOKEN_VALUE, HttpConstants.Headers.X_TOKEN_VALUE);
+        if(null != headerParams) {
+            for (Map.Entry<String,String> entry: headerParams.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                headers.set(key,value);
+            }
+        }
+        return new HttpEntity(params, headers);
+    }
+
     /**
      *
      * @param url
@@ -87,18 +95,21 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String get(String url,Map<String,?> ...uriVariables){
+    public String get(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
         }
+        HttpEntity httpEntity = getHttpEntity(params, headerParams,request);
         ResponseEntity<String> result = null;
         try {
             Map<String,Object> map = mapArgsConvertMap(uriVariables);
             if(!map.isEmpty()){
-                result = restTemplate.getForEntity(url,String.class,map);
+                result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class,map);
+                //result = restTemplate.getForEntity(url,String.class,map);
             }else{
-                result = restTemplate.getForEntity(url, String.class);
+                result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+                //result = restTemplate.getForEntity(url, String.class);
             }
             //验证响应状态
             valiResponeStatus(result);
@@ -114,29 +125,33 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String delete(String url,Map<String,?> ...uriVariables){
+    public String delete(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
         }
         Map<String,Object> map = mapArgsConvertMap(uriVariables);
+        HttpEntity httpEntity = getHttpEntity(params, headerParams, request);
+        ResponseEntity<String> result = null;
         if(!map.isEmpty()){
-            restTemplate.delete(url,map);
+            result = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity, String.class,map);
+            //restTemplate.delete(url,map);
         }else{
-            restTemplate.delete(url);
+            result = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity, String.class);
+            //restTemplate.delete(url);
         }
-        return convertJsonVo("true",0);
+        return convertJsonVo(result.getBody(),0);
     }
 
     /**
-     * 服务断路器
+     * 服务断路器，参数
      * @param url
      * @param params
      * @param headerParams
      * @param uriVariables
      * @return
      */
-    public String HystrixError(String url,String params,Map<String,String> headerParams,Map<String,?> ...uriVariables){
+    public String HystrixError(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
         String msgVo = "request url falid: "+url+", Port:"+serviceInfoImpl.getPort()+", Service closed，Please check!";
         return convertJsonVo(msgVo,1);
     }

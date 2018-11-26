@@ -4,10 +4,13 @@ import com.org.base.vo.ServerData;
 import com.org.entity.UserDevice;
 import com.org.service.UserDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
 * @Author: WangLin
@@ -21,8 +24,9 @@ public class UserDeviceController {
     @Autowired
     private UserDeviceService userDeviceService;
 
-    @GetMapping("/getUserDeviceById/{id}")
-    public ServerData<UserDevice> getUserDeviceById(@PathVariable("id") Long id){
+    @GetMapping(value="/getUserDeviceById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServerData<UserDevice> getUserDeviceById(HttpServletRequest request, @PathVariable("id") Long id){
+        System.out.println(request.getHeader("X_USER_ID"));
         return new ServerData<>(userDeviceService.getUserDeviceById(id));
     }
 

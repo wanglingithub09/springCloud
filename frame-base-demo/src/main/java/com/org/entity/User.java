@@ -12,6 +12,8 @@ public class User {
 
     private String phone;
 
+    private String password;
+
     public User(){}
 
     public User(Integer id, String name, Integer age,String phone){

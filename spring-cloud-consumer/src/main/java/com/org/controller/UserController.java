@@ -2,6 +2,7 @@ package com.org.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.org.base.BaseInfo;
 import com.org.base.enumclass.RetCode;
 import com.org.base.vo.ServerData;
 import com.org.entity.User;
@@ -18,14 +19,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseInfo {
 
     @Autowired
     private RestTemplateService restTemplateServiceImpl;
 
     @GetMapping("/getUserById/{id}")
     public ServerData<User> getUserById(@PathVariable("id") Long id){
-        String result = restTemplateServiceImpl.get("http://spring-cloud-provider/user/getUserById/"+id,null);
+        String result = restTemplateServiceImpl.get("http://spring-cloud-provider/user/getUserById/"+id,null,getRequest(),null);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
@@ -45,7 +46,7 @@ public class UserController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","18");
         String url = "http://spring-cloud-provider/user/getUser?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),getRequest(),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
@@ -60,7 +61,7 @@ public class UserController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUserList?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),getRequest(),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 

@@ -18,7 +18,7 @@ hystrix:
         isolation:
         thread:
         #毫秒单位
-        timeoutInMilliseconds: 2000
+        timeoutInMilliseconds: 10000
 eureka:
   instance:
     instance-id: 10.54.24.113:${server.port}
