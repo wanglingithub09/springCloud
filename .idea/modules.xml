@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spring-cloud-provider2/spring-cloud-provider2.iml" filepath="$PROJECT_DIR$/spring-cloud-provider2/spring-cloud-provider2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-oauth/spring-oauth.iml" filepath="$PROJECT_DIR$/spring-oauth/spring-oauth.iml" />
     </modules>
   </component>
 </project>

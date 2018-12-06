@@ -25,7 +25,7 @@ public class DynamicDataSourceAspect {
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
 
     /**
-     * 切面com包下到mapper包下所有切入点
+     * 切面com包下到mapper包下所有接口方法切入点
      */
     @Pointcut(value = "execution(* com..mapper..*.*(..))")
     private void pointcut() {

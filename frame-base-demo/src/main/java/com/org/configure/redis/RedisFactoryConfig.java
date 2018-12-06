@@ -3,6 +3,7 @@ package com.org.configure.redis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
@@ -17,6 +18,7 @@ import java.util.Map;
 * @Date: 2018/11/20 10:17
 */
 @Configuration
+@Order(0)
 public class RedisFactoryConfig {
 
     @Autowired

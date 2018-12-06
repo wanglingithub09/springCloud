@@ -1,5 +1,7 @@
 package com.org.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,9 @@ import java.util.concurrent.TimeUnit;
 */
 @Component
 public final class RedisUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
+
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -35,7 +40,6 @@ public final class RedisUtil {
             if (time > 0) {
 
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);
-
             }
 
             return true;
@@ -793,5 +797,15 @@ public final class RedisUtil {
 
         }
 
+    }
+
+    /**
+     * 发送消息
+     * @param messageBody
+     */
+    public void sendMessage(Object messageBody){
+        String channel = "TOPIC_USERNAME";
+        redisTemplate.convertAndSend(channel,messageBody);
+        logger.info("sendMessage OK!");
     }
 }

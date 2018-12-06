@@ -8,7 +8,7 @@ import java.io.IOException;
 * @Description: 字符工具类
 * @Date: 2018/11/20 10:31
 */
-public class StringUtils2 {
+public class StringHelper {
 
     /**
      *  Jackson library

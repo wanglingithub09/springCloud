@@ -34,7 +34,7 @@ public class ApiInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
-        //是否跳过注解
+        /*//是否跳过注解
         if(SkipAnnotation(o)){
             return true;
         }
@@ -50,7 +50,8 @@ public class ApiInterceptor implements HandlerInterceptor {
             }
         }
         log.error("请先登录。");
-        return false;
+        return false;*/
+        return true;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.org.service.impl;
 
+import com.org.service.ServicePort;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2018/11/13 10:14
  */
 @Component
-public class ServiceInfoImpl implements ApplicationListener<WebServerInitializedEvent> {
+public class ServicePortImpl implements ApplicationListener<WebServerInitializedEvent>,ServicePort {
 
     //服务端口
     private int serverPort;
@@ -20,6 +21,7 @@ public class ServiceInfoImpl implements ApplicationListener<WebServerInitialized
         this.serverPort = event.getWebServer().getPort();
     }
 
+    @Override
     public int getPort() {
         return this.serverPort;
     }

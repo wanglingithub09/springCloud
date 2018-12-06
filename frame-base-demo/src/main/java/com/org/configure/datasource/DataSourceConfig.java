@@ -1,6 +1,5 @@
 package com.org.configure.datasource;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,7 +27,7 @@ import java.util.Map;
 */
 @Configuration
 @MapperScan(basePackages = "com.org.mapper")
-public class DataSourceConfig {
+public class DataSourceConfig{
 
     private Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
 
@@ -37,7 +36,7 @@ public class DataSourceConfig {
 
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
+        SecurityDateSource dataSource = new SecurityDateSource();
         dataSource.setUrl(env.getProperty("jdbc1.datasource.jdbc-url"));
         dataSource.setUsername(env.getProperty("jdbc1.datasource.username"));
         dataSource.setPassword(env.getProperty("jdbc1.datasource.password"));
@@ -48,7 +47,7 @@ public class DataSourceConfig {
 
     @Bean(name = "oracleDataSource")
     public DataSource oracleDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
+        SecurityDateSource dataSource = new SecurityDateSource();
         dataSource.setUrl(env.getProperty("jdbc2.datasource.jdbc-url"));
         dataSource.setUsername(env.getProperty("jdbc2.datasource.username"));
         dataSource.setPassword(env.getProperty("jdbc2.datasource.password"));
@@ -121,7 +120,7 @@ public class DataSourceConfig {
     /**
      * 公共资源配置
      */
-    private void setCommonConfiguration(DruidDataSource datasource){
+    private void setCommonConfiguration(SecurityDateSource datasource){
         datasource.setInitialSize(Integer.valueOf(env.getProperty("datasource.initialSize")));
         datasource.setMinIdle(Integer.valueOf(env.getProperty("datasource.minIdle")));
         datasource.setMaxActive(Integer.valueOf(env.getProperty("datasource.maxActive")));

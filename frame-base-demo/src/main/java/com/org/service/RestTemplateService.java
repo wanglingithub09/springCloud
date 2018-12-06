@@ -11,4 +11,5 @@ public interface RestTemplateService {
     String post(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
     String get(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
     String delete(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
+    String put(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
 }

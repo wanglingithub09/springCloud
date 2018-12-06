@@ -9,6 +9,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="D:/creAbs/hrp-app/hrp-parent/pom.xml" />
+        <option value="E:/x-boot/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -28,6 +29,7 @@
         <option value="$PROJECT_DIR$/spring-cloud-eureka/pom.xml" />
         <option value="$PROJECT_DIR$/spring-cloud-eureka1/pom.xml" />
         <option value="$PROJECT_DIR$/spring-cloud-provider2/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-oauth/pom.xml" />
         <option value="$PROJECT_DIR$/springcloudeureka/pom.xml" />
         <option value="$PROJECT_DIR$/sss/pom.xml" />
       </set>
