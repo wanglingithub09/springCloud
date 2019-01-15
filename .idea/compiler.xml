@@ -15,7 +15,6 @@
         <module name="spring-cloud-provider" />
         <module name="spring-cloud-provider-two" />
         <module name="spring-cloud-provider2" />
-        <module name="xboot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -36,6 +35,7 @@
       <module name="spring-cloud-provider2" target="1.8" />
       <module name="springcloudeureka" target="1.8" />
       <module name="springoauth" target="1.8" />
+      <module name="xboot" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

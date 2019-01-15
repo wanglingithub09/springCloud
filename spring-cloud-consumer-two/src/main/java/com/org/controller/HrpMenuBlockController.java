@@ -22,7 +22,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/hrpMenuBlock")
-public class HrpMenuBlockController {
+public class HrpMenuBlockController extends BasicController{
 
     private Logger log = LoggerFactory.getLogger(HrpMenuBlockController.class);
 
@@ -34,7 +34,7 @@ public class HrpMenuBlockController {
     @Autowired
     private HrpMenuBlockService hrpMenuBlockService;
 
-    @GetMapping("/getHrpMenuBlock/{crcHrpBlockCode}")
+    @GetMapping(value = "/getHrpMenuBlock/{crcHrpBlockCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServerData<List<HrpMenuBlock>> getUserDeviceById(@PathVariable("crcHrpBlockCode") String crcHrpBlockCode){
         List<HrpMenuBlock> hrpMenuBlockList = hrpMenuBlockService.getHrpMenuBlockByCode(crcHrpBlockCode);
         return new ServerData<>(hrpMenuBlockList);

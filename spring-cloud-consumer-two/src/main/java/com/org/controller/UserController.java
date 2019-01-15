@@ -2,7 +2,6 @@ package com.org.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.org.base.BaseInfo;
 import com.org.base.vo.ServerData;
 import com.org.entity.User;
 import com.org.service.RestTemplateService;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseInfo {
+public class UserController extends BasicController {
 
     @Autowired
     private RestTemplateService restTemplateServiceImpl;
@@ -33,7 +32,7 @@ public class UserController extends BaseInfo {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUser?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),getRequest(),headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
@@ -47,7 +46,7 @@ public class UserController extends BaseInfo {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUserList?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),getRequest(),headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 }

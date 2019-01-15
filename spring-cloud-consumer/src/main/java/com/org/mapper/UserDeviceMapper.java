@@ -1,5 +1,7 @@
 package com.org.mapper;
 
+import com.org.configure.datasource.DS;
+import com.org.configure.datasource.DatabaseType;
 import com.org.entity.UserDevice;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,5 +16,6 @@ public interface UserDeviceMapper {
      * @param id
      * @return
      */
+    @DS(DatabaseType.mysqlDb)
     UserDevice getUserDeviceById(@Param("id") Long id);
 }

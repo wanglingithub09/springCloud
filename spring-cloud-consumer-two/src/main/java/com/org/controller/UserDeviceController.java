@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
 * @Author: WangLin
 * @Description:
@@ -19,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 */
 @RestController
 @RequestMapping("/userDevice")
-public class UserDeviceController {
+public class UserDeviceController extends BasicController{
 
     @Autowired
     private UserDeviceService userDeviceService;
 
     @GetMapping(value="/getUserDeviceById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServerData<UserDevice> getUserDeviceById(HttpServletRequest request, @PathVariable("id") Long id){
+    public ServerData<UserDevice> getUserDeviceById(@PathVariable("id") Long id){
         System.out.println(request.getHeader("X_USER_ID"));
         return new ServerData<>(userDeviceService.getUserDeviceById(id));
     }

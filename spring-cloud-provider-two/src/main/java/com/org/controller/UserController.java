@@ -6,7 +6,6 @@ import com.org.entity.User;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BasicController{
 
     @GetMapping("/getUserById/{id}")
     public ServerData<User> getUserById(@PathVariable("id") Integer id){
@@ -30,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/getUser",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServerData<User> getUser(@RequestBody User user, String age, HttpServletRequest request){
+    public ServerData<User> getUser(@RequestBody User user, String age){
         System.out.println(JSON.toJSON(user));
         user.setAge(Integer.valueOf(age));
         user.setName("李四");
@@ -39,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/getUserList",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServerData<List<User>> getUserList(@RequestBody User user, String age, HttpServletRequest request){
+    public ServerData<List<User>> getUserList(@RequestBody User user, String age){
         System.out.println(JSON.toJSON(user));
         user.setAge(Integer.valueOf(age));
         user.setName("李四");
