@@ -1,0 +1,80 @@
+<?xml version="1.0"encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <localRepository>D:\dev\apache-maven-repository</localRepository>  
+
+  <profiles>  
+    <profile>  
+      <id>nexus</id>  
+      <!--Enable snapshots for the built in central repo to direct -->  
+      <!--all requests to nexus via the mirror -->  
+      <repositories> 
+<!-- 私服仓库   snapshots默认是关闭的，需要手动开启 --> 
+          <repository>  
+            <id>nexus</id>  
+            <name>local private nexus</name>  
+            <!-- <url>http://mvnrepo.appleframework.com:8081/nexus/content/groups/public/</url> -->
+            <!-- <url>http://192.168.10.222:9999/repository/maven-public/</url> -->
+            <url>http://10.0.96.142:8081/nexus/content/groups/public</url>  
+            <releases>
+              <enabled>true</enabled>
+            </releases>  
+            <snapshots>
+              <enabled>true</enabled>
+              <updatePolicy>always</updatePolicy>
+            </snapshots>  
+          </repository> 
+
+          <!-- 阿里云的maven库 -->  
+          <repository> 
+            <id>aliyun_nexus</id>  
+            <name>aliyun nexus</name>  
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>  
+            <releases> 
+              <enabled>true</enabled> 
+            </releases>  
+            <snapshots> 
+              <enabled>false</enabled> 
+            </snapshots> 
+          </repository>  
+          <!-- 全球maven中央仓库 -->  
+          <repository> 
+            <id>central</id>
+            <!-- 这个id的仓库配置会覆盖掉maven-model-builder-3.2.5.jar中的中央仓库配置 -->  
+            <name>Central Repository</name>  
+            <url>https://repo.maven.apache.org/maven2</url>  
+            <layout>default</layout>  
+            <snapshots> 
+              <enabled>true</enabled> 
+            </snapshots> 
+          </repository> 
+          
+          <repository> 
+            <id>central2</id>
+            <name>Central Repository2</name>  
+            <url>http://repo1.maven.org/maven2/</url>  
+            <layout>default</layout>  
+            <snapshots> 
+              <enabled>false</enabled> 
+            </snapshots> 
+          </repository> 
+
+      </repositories>  
+      <pluginRepositories>  
+        <pluginRepository>  
+          <id>central</id>  
+          <url>http://central</url>  
+          <releases><enabled>true</enabled></releases>  
+          <snapshots><enabled>true</enabled></snapshots>  
+        </pluginRepository>  
+      </pluginRepositories>  
+    </profile>  
+  </profiles>  
+  <activeProfiles>  
+    <!--make the profile active all the time -->  
+    <activeProfile>nexus</activeProfile>  
+  </activeProfiles>  
+</settings>  
