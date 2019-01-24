@@ -54,9 +54,7 @@ public final class DruidConfigTools{
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(encryptCode("123456"));
-        System.out.println(decryptCode("E/Ny24Vn+eYUeCf+1XzwM7bRbVac8vAMbudXcJ4P1V5YwymNMyGoaFD5Fi++NcS13T0OD8TnTZqM/4cRpg7DXQ=="));
-        //System.out.println(Arrays.toString(genKeyPair()));
+        System.out.println(decryptCode(encryptCode("123456")));
     }
 
 }

@@ -36,7 +36,7 @@ public final class BASE64 {
 
     public static void main(String[] args) throws Exception {
 
-        String key = encryptBASE64("jdbc:mysql://10.0.55.159:3306/mango_dev?useUnicode=true&useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true".getBytes(StandardCharsets.UTF_8));
+        String key = encryptBASE64("123".getBytes(StandardCharsets.UTF_8));
         System.out.println(key);
         System.out.println(new String(decryptBASE64(key),StandardCharsets.UTF_8));
 
