@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.File;
@@ -70,10 +71,11 @@ public class QrCodeTools {
         if(null == object){
             return;
         }
-        if(!JSONUtil.isJsonObj(object.toString())){
+        QrConfigBean qrConfigBean = JSONObject.parseObject(object.toString(),QrConfigBean.class);
+        /*if(!JSONUtil.isJsonObj(object.toString())){
             return;
-        }
-        QrConfigBean qrConfigBean = JSONUtil.toBean(object.toString(),QrConfigBean.class);
+        }*/
+        //QrConfigBean qrConfigBean = JSONUtil.toBean(object.toString(),QrConfigBean.class);
         if(qrConfigBean.getWidth()>0){
             config.setWidth(qrConfigBean.getWidth());
         }
