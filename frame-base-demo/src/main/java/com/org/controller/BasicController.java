@@ -1,6 +1,5 @@
 package com.org.controller;
 
-import com.org.constants.HttpConstants;
 import com.org.entity.User;
 import com.org.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,8 @@ public class BasicController {
         //System.out.println(JSONObject.toJSONString(cookie));
         //从session里面获取对应的值
         //String myValue = (String) requestAttributes.getAttribute("value",RequestAttributes.SCOPE_SESSION);
-        Object object = redisUtil.get(request.getHeader(HttpConstants.Headers.X_USER_ID));
+        //Object object = redisUtil.get(request.getHeader(HttpConstants.Headers.X_USER_ID));
+        Object object = null;
         User user = new User();
         if(null != object){
             return (User)object;

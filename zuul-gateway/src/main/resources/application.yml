@@ -1,43 +1,39 @@
 #服务名
 spring:
   application:
-    name: spring-cloud-consumer
-  profiles:
-    active: dev
-#监控指标
-management:
-  server:
-    #端口
-    port: 8079
-    servlet:
-        context-path: /consumer
-  endpoints:
-      web:
-        exposure:
-          include: "*"
+    name: zuul-gateway
+#端口
+server:
+  port: 6001
+
 #注册中心地址及账号密码
 eurekaServer:
   user: root
   password: root
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-        thread:
-        #毫秒单位
-        timeoutInMilliseconds: 10000
+
 eureka:
   instance:
     instance-id: localhost:${server.port}
     hostname: localhost
     prefer-ip-address: true
   client:
-    prefer-ip-address: true
     #将此项目注册到Eureka服务
     register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://${eurekaServer.user}:${eurekaServer.password}@peer1:8761/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer2:8762/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer3:8763/eureka
 
-info:
-      status: OK
+#自定义路由映射
+zuul:
+  routes:
+    apigateway-consumer:
+        path: /apigateway-consumer/**
+        serviceId: spring-cloud-consumer
+        sensitiveHeaders: Cookie,Set-Cookie,Authorization
+    apigateway-provider:
+        path: /apigateway-provider/**
+        serviceId: spring-cloud-provider
+        sensitiveHeaders: Cookie,Set-Cookie,Authorization
+  #统一入口为上面的配置，其他入口忽略
+  #ignored-patterns: /*-cloud-*/**
+  strip-prefix: false

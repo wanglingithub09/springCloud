@@ -16,6 +16,7 @@
         <module>eureka-service-two</module>
         <module>eureka-service-three</module>
         <module>spring-cloud-consumer-two</module>
+        <module>zuul-gateway</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -31,6 +32,10 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -50,12 +55,22 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
+                    <delimiters>
+                        <!-- 在$符号开始$符号结尾的src/main/resources下的内容都可访问 -->
+                        <delimit>$</delimit>
+                    </delimiters>
                 </configuration>
             </plugin>
         </plugins>

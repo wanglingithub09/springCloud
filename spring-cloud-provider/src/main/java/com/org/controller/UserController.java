@@ -14,11 +14,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController extends BasicController {
 
-    @GetMapping("/getUserById/{id}")
-    public ServerData<User> getUser(HttpServletRequest request,@PathVariable("id") Integer id){
+    @GetMapping(value = "/getUserById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServerData<User> getUser(@PathVariable("id") Integer id){
         System.out.println(request.getHeader("X_USER_ID"));
         System.out.println(getCurrentUserInfo());
-        return new ServerData<>(new User(id,"张三",18,null));
+        String phone = ""+request.getServerPort();
+        return new ServerData<>(new User(id,"张三",18,phone));
     }
 
     @GetMapping("/getUserName")

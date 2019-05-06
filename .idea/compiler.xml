@@ -15,6 +15,7 @@
         <module name="spring-cloud-provider" />
         <module name="spring-cloud-provider-two" />
         <module name="spring-cloud-provider2" />
+        <module name="zuul-gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

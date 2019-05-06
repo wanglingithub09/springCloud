@@ -4,9 +4,11 @@ spring:
     name: spring-cloud-provider
   profiles:
     active: dev
-#端口
+#监控指标
+
 server:
-  port: 8078
+    #端口
+    port: 8088
 
 #注册中心地址及账号密码
 eurekaServer:
@@ -22,8 +24,8 @@ hystrix:
         timeoutInMilliseconds: 10000
 eureka:
   instance:
-    instance-id: 10.54.24.113:${server.port}
-    hostname: 10.54.24.113
+    instance-id: localhost:${server.port}
+    hostname: localhost
     prefer-ip-address: true
     #lease-renewal-interval-in-seconds: 5
     #lease-expiration-duration-in-seconds: 10
@@ -33,3 +35,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://${eurekaServer.user}:${eurekaServer.password}@peer1:8761/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer2:8762/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer3:8763/eureka
+
+info:
+      status: OK

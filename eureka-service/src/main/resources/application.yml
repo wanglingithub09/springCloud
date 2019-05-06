@@ -13,7 +13,7 @@ server:
   port: 8761
 eureka:
   instance:
-    hostname: 10.54.24.113
+    hostname: peer1
   client:
     #此项目不作为客户端注册
     register-with-eureka: false

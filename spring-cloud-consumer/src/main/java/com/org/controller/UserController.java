@@ -26,7 +26,7 @@ public class UserController extends BasicController {
 
     @GetMapping(value = "/getUserById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServerData<User> getUserById(@PathVariable("id") Long id){
-        String result = restTemplateServiceImpl.get("http://spring-cloud-provider/user/getUserById/"+id,null,request,null);
+        String result = restTemplateServiceImpl.get("http://spring-cloud-provider/user/getUserById/"+id,null);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
@@ -46,7 +46,7 @@ public class UserController extends BasicController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","18");
         String url = "http://spring-cloud-provider/user/getUser?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
@@ -61,7 +61,7 @@ public class UserController extends BasicController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUserList?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 

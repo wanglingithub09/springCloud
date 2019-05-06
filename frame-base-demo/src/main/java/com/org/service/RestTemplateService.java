@@ -8,8 +8,8 @@ import java.util.Map;
 * @Date: 2018/11/13 14:47
 */
 public interface RestTemplateService {
-    String post(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
-    String get(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
-    String delete(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
-    String put(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables);
+    String post(String url, String params,Map<String, String> headerParams,Map<String,?> ...uriVariables);
+    String get(String url,Map<String,?> ...uriVariables);
+    String delete(String url,String params,Map<String, String> headerParams,Map<String,?> ...uriVariables);
+    String put(String url,String params,Map<String, String> headerParams,Map<String,?> ...uriVariables);
 }

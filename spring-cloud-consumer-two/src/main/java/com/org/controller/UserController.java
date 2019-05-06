@@ -32,11 +32,11 @@ public class UserController extends BasicController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUser?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 
-    @GetMapping("/getUserList/{id}")
+    @GetMapping(value = "/getUserList/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServerData<User> getUserList(@PathVariable("id") Long id){
         Map<String, Object> params = new HashMap<>();
         params.put("name", "王五");
@@ -46,7 +46,7 @@ public class UserController extends BasicController {
         Map<String,Object> other = new HashMap<>();
         other.put("age","19");
         String url = "http://spring-cloud-provider/user/getUserList?age={age}";
-        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),request,headerMap,other);
+        String result = restTemplateServiceImpl.post(url, JSON.toJSONString(params),headerMap,other);
         return JSONObject.parseObject(result,ServerData.class);
     }
 }

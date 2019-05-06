@@ -1,13 +1,25 @@
+
 #服务名
 spring:
   application:
     name: spring-cloud-consumer
   profiles:
     active: dev
-#端口
-server:
-  port: 8088
-
+#监控指标
+management:
+  server:
+    #端口
+    port: 8078
+    servlet:
+      context-path: /consumer
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+      health:
+        enabled: true
+        show-details: always
 #注册中心地址及账号密码
 eurekaServer:
   user: root
@@ -22,8 +34,8 @@ hystrix:
         timeoutInMilliseconds: 10000
 eureka:
   instance:
-    instance-id: 10.54.24.113:${server.port}
-    hostname: 10.54.24.113
+    instance-id: localhost:${management.server.port}
+    hostname: localhost
     prefer-ip-address: true
   client:
     prefer-ip-address: true
@@ -31,3 +43,6 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://${eurekaServer.user}:${eurekaServer.password}@peer1:8761/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer2:8762/eureka,http://${eurekaServer.user}:${eurekaServer.password}@peer3:8763/eureka
+
+info:
+      status: OK

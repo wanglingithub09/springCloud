@@ -38,7 +38,6 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      *
      * @param url
      * @param params 请求参数
-     * @param request 请求
      * @param headerParams 请求头参数
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      * @return
@@ -46,7 +45,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String post(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+    public String post(String url, String params, Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
@@ -55,7 +54,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         if(StringUtils.isBlank(params)){
             params = "";
         }
-        HttpEntity httpEntity = getHttpEntity(params, headerParams,request);
+        HttpEntity httpEntity = getHttpEntity(params, headerParams);
         ResponseEntity<String> result = null;
         try {
             Map<String,Object> map = mapArgsConvertMap(uriVariables);
@@ -75,28 +74,24 @@ public class RestTemplateServiceImpl implements RestTemplateService {
     /**
      *
      * @param url
-     * @param params 请求参数
-     * @param request 请求
-     * @param headerParams 请求头参数
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      * @return
      * @HystrixCommand: 用于服务断路器，如果某服务突然停掉就2s通知，解决阻塞
      */
-    @HystrixCommand(fallbackMethod = "HystrixError")
+    @HystrixCommand(fallbackMethod = "getHystrixError")
     @Override
-    public String get(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+    public String get(String url,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
         }
-        HttpEntity httpEntity = getHttpEntity(params, headerParams,request);
         ResponseEntity<String> result = null;
         try {
             Map<String,Object> map = mapArgsConvertMap(uriVariables);
             if(!map.isEmpty()){
-                result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class,map);
+                result = restTemplate.getForEntity(url,String.class,map);
             }else{
-                result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+                result = restTemplate.getForEntity(url, String.class);
             }
             //验证响应状态
             valiResponeStatus(result);
@@ -110,7 +105,6 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      *
      * @param url
      * @param params 请求参数
-     * @param request 请求
      * @param headerParams 请求头参数
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      * @return
@@ -118,13 +112,13 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String delete(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+    public String delete(String url,String params, Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
         }
         Map<String,Object> map = mapArgsConvertMap(uriVariables);
-        HttpEntity httpEntity = getHttpEntity(params, headerParams, request);
+        HttpEntity httpEntity = getHttpEntity(params, headerParams);
         ResponseEntity<String> result = null;
         if(!map.isEmpty()){
             result = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity, String.class,map);
@@ -138,7 +132,6 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      *
      * @param url
      * @param params 请求参数
-     * @param request 请求
      * @param headerParams 请求头参数
      * @param uriVariables 格式化请求url地址 例如:http://服务名/test/{name}
      * @return
@@ -146,13 +139,13 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      */
     @HystrixCommand(fallbackMethod = "HystrixError")
     @Override
-    public String put(String url,String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+    public String put(String url,String params,Map<String, String> headerParams,Map<String,?> ...uriVariables){
         //url必须校验
         if(StringUtils.isBlank(url)){
             new Exception("url is not null");
         }
         Map<String,Object> map = mapArgsConvertMap(uriVariables);
-        HttpEntity httpEntity = getHttpEntity(params, headerParams, request);
+        HttpEntity httpEntity = getHttpEntity(params, headerParams);
         ResponseEntity<String> result = null;
         if(!map.isEmpty()){
             result = restTemplate.exchange(url, HttpMethod.PUT, httpEntity, String.class,map);
@@ -170,7 +163,18 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      * @param uriVariables
      * @return
      */
-    public String HystrixError(String url, String params, HttpServletRequest request,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+    public String HystrixError(String url, String params,Map<String, String> headerParams,Map<String,?> ...uriVariables){
+        String msgVo = "request url falid: "+url+", Port:"+servicePortImpl.getPort()+", Service closed，Please check!";
+        return convertJsonVo(msgVo,1);
+    }
+
+    /**
+     * 服务断路器，参数要与服务接口一致
+     * @param url
+     * @param uriVariables
+     * @return
+     */
+    public String getHystrixError(String url, Map<String,?> ...uriVariables){
         String msgVo = "request url falid: "+url+", Port:"+servicePortImpl.getPort()+", Service closed，Please check!";
         return convertJsonVo(msgVo,1);
     }
@@ -179,12 +183,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
      * 请求参数
      * @param params 参数
      * @param headerParams 请求头参数
-     * @param request 请求
      * @return
      */
-    private HttpEntity getHttpEntity(String params, Map<String, String> headerParams,HttpServletRequest request) {
+    private HttpEntity getHttpEntity(String params, Map<String, String> headerParams) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpConstants.Headers.X_USER_ID,request.getHeader(HttpConstants.Headers.X_USER_ID));
+        //headers.add(HttpConstants.Headers.X_USER_ID,request.getHeader(HttpConstants.Headers.X_USER_ID));
         headers.add(HttpConstants.Headers.SKIP_VALIDATION,HttpConstants.Headers.SKIP_VALIDATION);
         headers.add(HttpConstants.Headers.ACCEPT,HttpConstants.Headers.APPLICATION_JSON);
         headers.add(HttpConstants.Headers.CONTENT_TYPE, HttpConstants.Headers.APPLICATION_JSON_UTF_8);
@@ -193,7 +196,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
             for (Map.Entry<String,String> entry: headerParams.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                headers.set(key,value);
+                headers.add(key,value);
             }
         }
         return new HttpEntity(params, headers);
@@ -216,7 +219,8 @@ public class RestTemplateServiceImpl implements RestTemplateService {
             serverData.setMsg(RetCode.BUSINESS_CODE.getMsgId());
             serverData.setCode(RetCode.BUSINESS_CODE.getMsgCode());
         }
-        return JSONObject.toJSONString(serverData);
+        String resultJsonStr = JSONObject.toJSONString(serverData);
+        return resultJsonStr;
     }
 
     /**

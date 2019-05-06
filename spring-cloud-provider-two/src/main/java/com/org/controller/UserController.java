@@ -18,9 +18,10 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController extends BasicController{
 
-    @GetMapping("/getUserById/{id}")
+    @GetMapping(value = "/getUserById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServerData<User> getUserById(@PathVariable("id") Integer id){
-        return new ServerData<>(new User(id,"李四",20,null));
+        String phone = ""+request.getServerPort();
+        return new ServerData<>(new User(id,"李四",20,phone));
     }
 
     @GetMapping("/getUserName")
